@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../firebase/config'; // 🟢 ดึง auth มาใช้
+import { signInWithEmailAndPassword, signOut } from 'firebase/auth'; // 🟢 ดึง signOut มาใช้ด้วย
+import { doc, getDoc } from 'firebase/firestore'; // 🟢 ดึงคำสั่งอ่าน Firestore
+import { auth, db } from '../firebase/config'; // 🟢 ดึง db มาใช้
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [errorMsg, setErrorMsg] = useState(''); // 🟢 เพิ่ม State แจ้ง Error
+  const [errorMsg, setErrorMsg] = useState('');
   const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -16,9 +17,30 @@ export default function Login() {
     setErrorMsg('');
 
     try {
-      // 🟢 ยิงคำสั่ง Login ไปหา Firebase
-      await signInWithEmailAndPassword(auth, email, password);
-      navigate('/');
+      // 1. ล็อกอินผ่าน Firebase Auth
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // 2. 🟢 วิ่งไปเช็กสิทธิ์ใน Firestore
+      const userDocRef = doc(db, 'users', user.uid);
+      const userDocSnap = await getDoc(userDocRef);
+
+      if (userDocSnap.exists()) {
+        const userData = userDocSnap.data();
+        if (userData.role === 'admin') {
+          // ถ้าเป็น Admin ให้เข้าหน้า Dashboard ได้
+          navigate('/');
+        } else {
+          // ถ้าเป็น User ทั่วไป ให้เตะออกและโชว์ Error
+          await signOut(auth);
+          setErrorMsg('คุณไม่มีสิทธิ์เข้าถึงระบบหลังบ้านครับ');
+        }
+      } else {
+         // กรณีไม่มีข้อมูลใน Firestore เลย
+         await signOut(auth);
+         setErrorMsg('ไม่พบข้อมูลผู้ใช้งานในระบบ');
+      }
+
     } catch (error: any) {
       setErrorMsg('อีเมลหรือรหัสผ่านไม่ถูกต้อง');
     } finally {
