@@ -56,17 +56,6 @@ export default function AdminLayout() {
           >
             📦 จัดการสิ่งของ
           </Link>
-          
-          <Link 
-            to="/reports" 
-            className={`flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-colors ${
-              location.pathname === '/reports' 
-                ? 'bg-teal-50 text-primaryTeal' 
-                : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
-            }`}
-          >
-            ⚠️ จัดการข้อพิพาท
-          </Link>
         </nav>
         
         <div className="p-4 border-t border-gray-200">

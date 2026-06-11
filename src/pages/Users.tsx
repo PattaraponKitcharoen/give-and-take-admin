@@ -247,49 +247,6 @@ export default function Users() {
     }
   };
 
-  const handleJumpToUser = async (userId: string) => {
-    setIsFetchingExtra(true);
-    try {
-      const userSnap = await getDoc(doc(db, 'users', userId));
-      if (userSnap.exists()) {
-        const data = userSnap.data();
-        let formattedDate = 'ไม่ระบุ';
-        if (data.created_at) {
-          formattedDate = data.created_at.toDate().toLocaleDateString('th-TH', { year: 'numeric', month: 'long', day: 'numeric' });
-        }
-        
-        let updatedDate = 'ไม่ระบุ';
-        if (data.updated_at) {
-          updatedDate = data.updated_at.toDate().toLocaleDateString('th-TH', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
-        }
-
-        setSelectedUser({
-          id: userSnap.id,
-          name: data.name || 'ไม่มีชื่อ',
-          email: data.email || 'ไม่มีอีเมล',
-          coins_balance: data.coins_balance || 0,
-          is_verified: data.is_verified || false,
-          status: data.status || 'active',
-          tel: data.tel || '-',
-          bio: data.bio || '',
-          profile_img_url: data.profile_img_url || '',
-          rating_scores: data.rating_scores || 0,
-          rating_count: data.rating_count || 0,
-          created_at_string: formattedDate,
-          location_name: data.location?.display_name || '-',
-          updated_at_string: updatedDate,
-        });
-        setModalView('profile');
-      } else {
-        alert('ไม่พบข้อมูลผู้ใช้นี้ในระบบ');
-      }
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsFetchingExtra(false);
-    }
-  };
-
   // 🟢 ฟังก์ชันสำหรับดึงและแสดงข้อมูลสิ่งของแบบเจาะลึก
   const handleViewItemDetail = async (itemId: string) => {
     setIsFetchingItem(true);
