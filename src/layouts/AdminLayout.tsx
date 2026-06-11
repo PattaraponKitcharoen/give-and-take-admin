@@ -27,7 +27,7 @@ export default function AdminLayout() {
             to="/" 
             className={`flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-colors ${
               location.pathname === '/' 
-                ? 'bg-teal-50 text-primaryTeal' // 🟢 สีไฮไลต์เมื่อตรงกับ URL
+                ? 'bg-teal-50 text-primaryTeal' 
                 : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
             }`}
           >
@@ -38,18 +38,30 @@ export default function AdminLayout() {
             to="/users" 
             className={`flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-colors ${
               location.pathname === '/users' 
-                ? 'bg-teal-50 text-primaryTeal' // 🟢 สีไฮไลต์เมื่อตรงกับ URL
+                ? 'bg-teal-50 text-primaryTeal' 
                 : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
             }`}
           >
             👥 จัดการผู้ใช้
+          </Link>
+
+          {/* 🟢 เพิ่มปุ่ม จัดการสิ่งของ ตรงนี้ */}
+          <Link 
+            to="/listings" 
+            className={`flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-colors ${
+              location.pathname === '/listings' 
+                ? 'bg-teal-50 text-primaryTeal' 
+                : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+            }`}
+          >
+            📦 จัดการสิ่งของ
           </Link>
           
           <Link 
             to="/reports" 
             className={`flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-colors ${
               location.pathname === '/reports' 
-                ? 'bg-teal-50 text-primaryTeal' // 🟢 สีไฮไลต์เมื่อตรงกับ URL
+                ? 'bg-teal-50 text-primaryTeal' 
                 : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
             }`}
           >

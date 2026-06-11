@@ -4,6 +4,7 @@ import AdminLayout from './layouts/AdminLayout';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import Users from './pages/Users';
+import Listings from './pages/Listings';
 
 // 🟢 ยามเฝ้าประตูที่ฉลาดขึ้น เช็กจาก Firebase เลย
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
@@ -31,6 +32,7 @@ function App() {
           >
             <Route index element={<Dashboard />} />
             <Route path="users" element={<Users />} />
+            <Route path="listings" element={<Listings />} />
           </Route>
         </Routes>
       </BrowserRouter>
