@@ -1,10 +1,12 @@
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase/config';
 import { useAuth } from '../contexts/AuthContext';
-import { Outlet, Link, useNavigate } from 'react-router-dom';
+import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom';
+
 
 export default function AdminLayout() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { currentUser } = useAuth(); // ดึงข้อมูล Admin ที่ล็อกอินอยู่มาใช้
 
   // 🟢 ฟังก์ชันล็อกเอาต์
@@ -21,9 +23,38 @@ export default function AdminLayout() {
         </div>
         
         <nav className="flex-1 p-4 space-y-1">
-          <Link to="/" className="flex items-center px-4 py-3 text-sm font-medium rounded-xl bg-teal-50 text-primaryTeal">📊 Dashboard</Link>
-          <Link to="/users" className="flex items-center px-4 py-3 text-sm font-medium rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors">👥 จัดการผู้ใช้</Link>
-          <Link to="/reports" className="flex items-center px-4 py-3 text-sm font-medium rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors">⚠️ จัดการข้อพิพาท</Link>
+          <Link 
+            to="/" 
+            className={`flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-colors ${
+              location.pathname === '/' 
+                ? 'bg-teal-50 text-primaryTeal' // 🟢 สีไฮไลต์เมื่อตรงกับ URL
+                : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+            }`}
+          >
+            📊 Dashboard
+          </Link>
+          
+          <Link 
+            to="/users" 
+            className={`flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-colors ${
+              location.pathname === '/users' 
+                ? 'bg-teal-50 text-primaryTeal' // 🟢 สีไฮไลต์เมื่อตรงกับ URL
+                : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+            }`}
+          >
+            👥 จัดการผู้ใช้
+          </Link>
+          
+          <Link 
+            to="/reports" 
+            className={`flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-colors ${
+              location.pathname === '/reports' 
+                ? 'bg-teal-50 text-primaryTeal' // 🟢 สีไฮไลต์เมื่อตรงกับ URL
+                : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+            }`}
+          >
+            ⚠️ จัดการข้อพิพาท
+          </Link>
         </nav>
         
         <div className="p-4 border-t border-gray-200">
