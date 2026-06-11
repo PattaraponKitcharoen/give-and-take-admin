@@ -94,17 +94,55 @@ export default function Dashboard() {
         </div>
         
         {/* การ์ดที่ 4: ข้อพิพาท */}
-        <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-between">
-          <div className="flex justify-between items-start">
-            <h3 className="text-gray-500 text-sm font-semibold tracking-wide">รอตรวจสอบ (ข้อพิพาท)</h3>
-            <div className="p-2 bg-red-50 rounded-lg"><span className="text-xl">⚠️</span></div>
-          </div>
-          {isLoading ? (
-            <div className="h-10 w-20 bg-gray-200 animate-pulse rounded mt-2"></div>
-          ) : (
-            <p className="text-4xl font-black text-red-500 mt-2">{stats.disputes}</p>
-          )}
+        {/* 🟢 ตารางรายการข้อพิพาทล่าสุด (Recent Disputes) */}
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+        <div className="p-6 border-b border-gray-100 flex justify-between items-center">
+          <h3 className="text-lg font-bold text-gray-800">รายการร้องเรียนล่าสุด (Recent Reports)</h3>
+          <button className="text-sm text-teal-600 font-semibold hover:text-teal-700">ดูทั้งหมด</button>
         </div>
+        <div className="overflow-x-auto">
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="bg-gray-50 text-gray-500 text-sm">
+                <th className="p-4 font-semibold">รหัสอ้างอิง</th>
+                <th className="p-4 font-semibold">ผู้ร้องเรียน</th>
+                <th className="p-4 font-semibold">หัวข้อปัญหา</th>
+                <th className="p-4 font-semibold">สถานะ</th>
+                <th className="p-4 font-semibold">จัดการ</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-100">
+              {/* ตัวอย่างข้อมูล Mockup (เดี๋ยวเราค่อยมาต่อ API ดึงของจริงกัน) */}
+              <tr className="hover:bg-gray-50 transition-colors">
+                <td className="p-4 text-sm font-medium text-gray-800">#REP-0012</td>
+                <td className="p-4 text-sm text-gray-600">Somchai (UID: a1b2)</td>
+                <td className="p-4 text-sm text-gray-600">สินค้าไม่ตรงปก (หน้าจอแตก)</td>
+                <td className="p-4">
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                    รอตรวจสอบ
+                  </span>
+                </td>
+                <td className="p-4">
+                  <button className="text-teal-600 hover:text-teal-900 text-sm font-semibold">ตรวจสอบ</button>
+                </td>
+              </tr>
+              <tr className="hover:bg-gray-50 transition-colors">
+                <td className="p-4 text-sm font-medium text-gray-800">#REP-0011</td>
+                <td className="p-4 text-sm text-gray-600">Jane Doe (UID: x9y8)</td>
+                <td className="p-4 text-sm text-gray-600">พฤติกรรมฉ้อโกง / ไม่ส่งของ</td>
+                <td className="p-4">
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                    กำลังเจรจา
+                  </span>
+                </td>
+                <td className="p-4">
+                  <button className="text-teal-600 hover:text-teal-900 text-sm font-semibold">ตรวจสอบ</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
 
       </div>
 
